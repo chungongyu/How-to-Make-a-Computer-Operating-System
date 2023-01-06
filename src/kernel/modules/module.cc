@@ -53,8 +53,8 @@ File* Module::mount(char* dev,char* dir,char* module,u32 flag){
 		if (!strcmp(module_builder[i]->module_name,module)){
 			fp=module_builder[i]->drive(dir,flag,fdev);
 			if (module_builder[i]->module_type==MODULE_FILESYSTEM && fp!=NULL){
-				fsm.addFile("/mnt/",fp);
-				fp->setType(TYPE_DIRECTORY);
+				fsm.add_file("/mnt/", fp);
+				fp->type(TYPE_DIRECTORY);
 				return fp;
 			}
 			else

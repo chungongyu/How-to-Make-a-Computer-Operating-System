@@ -1,6 +1,5 @@
-
 #ifndef STRING_H
 #define STRING_H
 
 
-#endif
+#endif  // STRING_H

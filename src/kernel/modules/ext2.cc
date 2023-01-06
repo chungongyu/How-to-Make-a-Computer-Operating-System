@@ -7,11 +7,11 @@
 File* ext2_mount(char* name,u32 flag,File* dev){
 	int ret=ext2_check_disk(dev);
 	if (ret!=RETURN_OK){
-		io.print("ext2: can't mount %s in %s \n",dev->getName(),name);
+		io.print("ext2: can't mount %s in %s \n",dev->name(),name);
 		return NULL;
 	}
 	else{	
-		io.print("ext2:  mount %s in %s \n",dev->getName(),name);
+		io.print("ext2:  mount %s in %s \n",dev->name(),name);
 		Ext2* ret=new Ext2(name);
 		ret->ext2inode=EXT2_INUM_ROOT;
 		ext2_get_disk_info(dev,ret);
@@ -48,8 +48,8 @@ u32	Ext2::open(u32 flag){
 
 u32	Ext2::read(u32 pos,u8* buffer,u32 sizee){
 	u32 bufsize=sizee;
-	if ((pos + bufsize) > (size))
-		bufsize = (u32)(size) - pos;
+	if ((pos + bufsize) > (size_))
+		bufsize = (u32)(size_) - pos;
 	memcpy((char*)buffer, (char *) (map + pos), bufsize);
 	return bufsize;
 }
@@ -234,7 +234,7 @@ int ext2_scan(Ext2 *dir)
 	char *filename;
 	int f_toclose;
 	ext2_inode *inode = ext2_read_inode(dir->disk, dir->ext2inode);
-	if (dir->getType()!=TYPE_DIRECTORY) {
+	if (dir->type()!=TYPE_DIRECTORY) {
 		return ERROR_PARAM;
 	}
 	
@@ -257,13 +257,13 @@ int ext2_scan(Ext2 *dir)
 						leaf->ext2inode = dentry->inode;
 						leaf->disk=dir->disk;
 						if (ext2_is_directory(leaf))
-							leaf->setType(TYPE_DIRECTORY);
+							leaf->type(TYPE_DIRECTORY);
 						else
-							leaf->setType(TYPE_FILE);
-						dir->addChild(leaf);
+							leaf->type(TYPE_FILE);
+						dir->add(leaf);
 						leaf->map = 0;
 						ext2_inode *inod=ext2_read_inode((ext2_disk*)leaf->disk,leaf->ext2inode);
-						leaf->setSize(inod->i_size);
+						leaf->size(inod->i_size);
 						kfree(inod);
 					}
 				}

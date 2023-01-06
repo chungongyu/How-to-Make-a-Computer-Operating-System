@@ -1,42 +1,39 @@
-#ifndef __MY_BOOT__
-#define __MY_BOOT__
+#ifndef BOOT_H_
+#define BOOT_H_
 
 #include <runtime/types.h>
 
 struct multiboot_info {
-	u32 flags;
-	u32 low_mem;
-	u32 high_mem;
-	u32 boot_device;
-	u32 cmdline;
-	u32 mods_count;
-	u32 mods_addr;
-	struct {
-		u32 num;
-		u32 size;
-		u32 addr;
-		u32 shndx;
-	} elf_sec;
-	unsigned long mmap_length;
-	unsigned long mmap_addr;
-	unsigned long drives_length;
-	unsigned long drives_addr;
-	unsigned long config_table;
-	unsigned long boot_loader_name;
-	unsigned long apm_table;
-	unsigned long vbe_control_info;
-	unsigned long vbe_mode_info;
-	unsigned long vbe_mode;
-	unsigned long vbe_interface_seg;
-	unsigned long vbe_interface_off;
-	unsigned long vbe_interface_len;
+  u32 flags;
+  u32 low_mem;
+  u32 high_mem;
+  u32 boot_device;
+  u32 cmdline;
+  u32 mods_count;
+  u32 mods_addr;
+  struct {
+    u32 num;
+    u32 size;
+    u32 addr;
+    u32 shndx;
+  } elf_sec;
+  unsigned long mmap_length;
+  unsigned long mmap_addr;
+  unsigned long drives_length;
+  unsigned long drives_addr;
+  unsigned long config_table;
+  unsigned long boot_loader_name;
+  unsigned long apm_table;
+  unsigned long vbe_control_info;
+  unsigned long vbe_mode_info;
+  unsigned long vbe_mode;
+  unsigned long vbe_interface_seg;
+  unsigned long vbe_interface_off;
+  unsigned long vbe_interface_len;
 };
 
-
-
 /* VBE controller information.  */
-struct vbe_controller
-{
+struct vbe_controller {
   unsigned char signature[4];
   unsigned short version;
   unsigned long oem_string;
@@ -52,8 +49,7 @@ struct vbe_controller
 } __attribute__ ((packed));
 
 /* VBE mode information.  */
-struct vbe_mode
-{
+struct vbe_mode {
   unsigned short mode_attributes;
   unsigned char win_a_attributes;
   unsigned char win_b_attributes;
@@ -110,4 +106,4 @@ struct vbe_mode
   unsigned char reserved3[189];
 } __attribute__ ((packed));
 
-#endif
+#endif  // BOOT_H

@@ -9,7 +9,7 @@ ModLink::~ModLink(){
 
 ModLink::ModLink(char* n) : File(n,TYPE_FILE)
 {
-	fsm.addFile("/sys/mods/",this);
+	fsm.add_file("/sys/mods/",this);
 }
 
 u32	ModLink::open(u32 flag){

@@ -207,19 +207,19 @@ void call_getdents(){
 	}
 	openfile* info = p->getFileInfo(fd);
 	int i=0;
-	File* child=fp->getChild();
+	File* child=fp->child();
 	while (child!=NULL){
 		if (i==(info->ptr)){
-			//io.print("readdir=%s  - size=%d  entry=%x\n",child->getName(),size,entry);
-			nentry.d_ino=child->getInode();
-			strncpy(nentry.d_name,child->getName(),256);
+			//io.print("readdir=%s  - size=%d  entry=%x\n",child->name(),size,entry);
+			nentry.d_ino=child->inode();
+			strncpy(nentry.d_name, child->name(),256);
 			memcpy((char*)entry,(char*)&nentry,size);
 			info->ptr++;
 			arch.setRet(1);
 			return;
 		}
 		i++;
-		child=child->getNext();
+		child=child->next();
 	}
 	arch.setRet((u32)0);
 	return;
@@ -272,7 +272,7 @@ void call_chdir(){
 		return;
 	}
 	
-	p->setCurrentDir(f);
+	p->cwd(f);
 	arch.setRet((u32)1);
 	return;
 }

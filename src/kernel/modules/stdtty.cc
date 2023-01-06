@@ -27,14 +27,14 @@ Console::Console(char* n,u32 flag) : Device(n)
 
 void Console::reset_info(){
 	//static info
-	strncpy(sinfo.name,name,TTY_NAME_LEN);
+	strncpy(sinfo.name,name_,TTY_NAME_LEN);
 	sinfo.state=TTY_STATE_RUN;
 	sinfo.type=TTY_TYPE_IOSTD;
 	sinfo.flags=0;
 	
 	//moving info
-	minfo.x=iotty->getX();
-	minfo.y=iotty->getY();
+	minfo.x=iotty->cursorX();
+	minfo.y=iotty->cursorY();
 	minfo.attrf=White;
 	minfo.attrb=Black;
 }

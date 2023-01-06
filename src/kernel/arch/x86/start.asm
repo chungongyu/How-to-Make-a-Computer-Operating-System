@@ -1,14 +1,14 @@
-global _start, _kmain
-extern kmain, start_ctors, end_ctors, start_dtors, end_dtors
+global _start, _kernal_main
+extern kernal_main, start_ctors, end_ctors, start_dtors, end_dtors
 
-    
-%define MULTIBOOT_HEADER_MAGIC  0x1BADB002
-%define MULTIBOOT_HEADER_FLAGS	0x00000003
+
+%define MULTIBOOT_HEADER_MAGIC    0x1BADB002
+%define MULTIBOOT_HEADER_FLAGS    0x00000003
 %define CHECKSUM -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
 
 ;-- Entry point
 _start:
-	jmp start
+    jmp start
 
 ;-- Multiboot header --
 align 4
@@ -20,29 +20,29 @@ dd CHECKSUM
 ;--/Multiboot header --
 
 start:
-	push ebx
-	 
+    push ebx
+
 static_ctors_loop:
-   mov ebx, start_ctors
-   jmp .test
+    mov ebx, start_ctors
+    jmp .test
 .body:
-   call [ebx]
-   add ebx,4
+    call [ebx]
+    add ebx, 4
 .test:
-   cmp ebx, end_ctors
-   jb .body
+    cmp ebx, end_ctors
+    jb .body
  
-   call kmain                      ; call kernel proper
+    call kernal_main                      ; call kernel proper
  
 static_dtors_loop:
-   mov ebx, start_dtors
-   jmp .test
+    mov ebx, start_dtors
+    jmp .test
 .body:
-   call [ebx]
-   add ebx,4
+    call [ebx]
+    add ebx, 4
 .test:
-   cmp ebx, end_dtors
-   jb .body
-	
-	cli ; stop interrupts
-	hlt ; halt the CPU
+    cmp ebx, end_dtors
+    jb .body
+    
+    cli ; stop interrupts
+    hlt ; halt the CPU

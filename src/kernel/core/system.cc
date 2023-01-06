@@ -27,7 +27,7 @@ void System::init(){
 
 	/** System user **/
 	root=new User("root");
-	root->setUType(USER_ROOT);
+	root->type(USER_ROOT);
 	
 	actual=new User("liveuser");
 
@@ -50,17 +50,17 @@ void System::init(){
 int	System::login(User* us,char* pass){
 	if (us==NULL)
 		return ERROR_PARAM;
-	if (us->getPassword() != NULL){	//si il ya un password
+	if (us->password() != NULL){	//si il ya un password
 		
 		if (pass==NULL)	//si on a passé un code
 			return PARAM_NULL;
 			//
-		if (strncmp(pass,us->getPassword(),strlen(us->getPassword())))	//test password
+		if (strncmp(pass,us->password(),strlen(us->password())))	//test password
 			return RETURN_FAILURE;
-		//io.print("login %s with %s (%s)\n",us->getName(),pass,us->getPassword());
+		//io.print("login %s with %s (%s)\n",us->name(),pass,us->password());
 	}
 		
-	uservar->write(0,(u8*)us->getName(),strlen(us->getName()));
+	uservar->write(0,(u8*)us->name(),strlen(us->name()));
 	actual=us;
 	return RETURN_OK;
 }
@@ -72,17 +72,17 @@ char* System::getvar(char* name){
 	if (temp==NULL){
 		return NULL;
 	}
-	varin=(char*)kmalloc(temp->getSize());
-	memset(varin,0,temp->getSize());
-	temp->read(0,(u8*)varin,temp->getSize());
+	varin = (char *)kmalloc(temp->size());
+	memset(varin, 0, temp->size());
+	temp->read(0, (u8*)varin, temp->size());
 	return varin;
 }
 
 User* System::getUser(char* nae){
 	User* us=listuser;
 	while (us!=NULL){
-		//io.print("test '%s' with '%s'\n",nae,us->getName());
-		if (!strncmp(nae,us->getName(),strlen(us->getName())))
+		//io.print("test '%s' with '%s'\n",nae,us->name());
+		if (!strncmp(nae,us->name(),strlen(us->name())))
 			return us;
 		us=us->getUNext();
 	}
@@ -98,7 +98,7 @@ void System::addUserToList(User* us){
 
 u32 System::isRoot(){
 	if (actual!=NULL){
-		if (actual->getUType() == USER_ROOT)
+		if (actual->type() == USER_ROOT)
 			return 1;
 		else
 			return 0;

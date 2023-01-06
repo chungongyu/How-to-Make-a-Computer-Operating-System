@@ -53,12 +53,12 @@ struct stat_fs {
 * Return code
 */
 enum{
-	RETURN_OK=0,
-	NOT_DEFINED=-1, //If not implemented
-	ERROR_MEMORY=-2,
-	PARAM_NULL=-3,
-	ERROR_PARAM=-4,
-	RETURN_FAILURE=-128 //Added by NoMaintener aka William. In case of error
+	RETURN_OK      =  0,
+	NOT_DEFINED    = -1,  // If not implemented
+	ERROR_MEMORY   = -2,
+	PARAM_NULL     = -3,
+	ERROR_PARAM    = -4,
+	RETURN_FAILURE = -128  // Added by NoMaintener aka William. In case of error
 };
  
  
@@ -68,8 +68,8 @@ enum{
 typedef void (*int_handler)(void);
 
 
-#define NULL 0
-#define true 1
+#define NULL  0
+#define true  1
 #define false 0
 
 #endif

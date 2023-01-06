@@ -66,6 +66,3 @@ geniso:
 
 clean:
 	rm -f $(OBJS)  $(KERNEL) dasm.txt
-	
-	
-
